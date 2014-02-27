@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="service.gmail-torrent-checker" name="GMail Torrent Checker" version="0.1.1" provider-name="davixyz@gmail.com">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.service" library="default.py" start="startup">
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">This service checks your gmail account (or other imap server) and searches for messages with the substring "torrent email" (by default, but you can customize it) in the subject.</summary>
+    <description lang="en">
+      If it finds a message with the subject you want, then parses the body, gets the first link (http or magnet) and adds it to the trasmission host (it's mandatory to have a web interface for transmission, because torrents injection is via http).
+    </description>
+    <disclaimer lang="en"></disclaimer>
+    <language>en</language>
+    <platform>all</platform>
+    <license></license>
+    <forum></forum>
+    <website>http://davidayala.eu</website>
+    <email>davixyz@gmail.com</email>
+    <source>http://github.com/davidayalas/service.gmail-torrent-checker</source>
+  </extension>
+</addon>

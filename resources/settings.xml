@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32001">
+        <setting label="32003" type="text" id="imap_host" default="imap.gmail.com" />
+        <setting label="32004" type="number" id="imap_port" default="993" />
+        <setting label="32005" type="text" id="imap_username" default="" />
+        <setting label="32006" type="text" id="imap_password" option="hidden" default="" />
+    </category>
+    <category label="32002">
+        <setting label="32003" type="text" id="transmission_host" default="localhost" />
+        <setting label="32004" type="number" id="transmission_port" default="9091" />
+        <setting label="32005" type="text" id="transmission_username" default="" />
+        <setting label="32006" type="text"   id="transmission_password" option="hidden" default="" />
+    </category>
+    <category label="32008">
+        <setting label="32007" type="number" id="cron" default="900" />
+        <setting label="32009" type="text" id="avoid_strings" default="" />
+        <setting label="32010" type="text" id="search_subject" default="torrent email" />
+    </category>
+</settings>
