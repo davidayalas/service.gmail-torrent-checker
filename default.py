@@ -1,9 +1,12 @@
 import xbmcaddon
+import xbmc
 import imaplib
+import email
 import httplib
 import base64
 import sys
 import time
+import re
 from json import dumps
 
 settings = xbmcaddon.Addon(id='service.gmail-torrent-checker')
@@ -45,12 +48,13 @@ if transmission_user is not "":
 
 retry_timeout = 60
 
-""" Adds a torrent in the host
-	param @torrent is String (http://uri-to-torrent or magnet:?)
-
-	return Boolean
-"""
 def addTorrent(torrent):
+	""" Adds a torrent in the host
+		param @torrent is String (http://uri-to-torrent or magnet:?)
+
+		return Boolean
+	"""
+
 	path = "/transmission/rpc"
 
 	try:
@@ -79,9 +83,15 @@ def addTorrent(torrent):
 		print "Torrent injection error: " + str(e)
 		return False
 
-""" Main functionallity that checks for new emails
-"""
+
+def showMessage(header,message):
+	xbmc.executebuiltin('Notification("'+header+'","'+message+'",5000)')
+
 def main():
+	""" Main functionallity that checks for new emails
+	
+	"""
+
 	print "checking torrents"
 
 	mail = None
@@ -91,8 +101,14 @@ def main():
 	except:
 		print "IMAP connection error. Retrying in "+str(retry_timeout)+" seconds"
 
-	if mail is not None:	
+	try:
 		mail.login(user, pwd)
+	except:
+		mail = None
+		print "Login error"
+
+	if mail is not None:
+
 		mail.select("inbox")
 
 		result, data = mail.search(None, '(UNSEEN HEADER Subject "'+search_subject+'")') #search for unread emails with the subject provided in settings
@@ -104,12 +120,12 @@ def main():
 			print "No new torrents"
 
 		for uid in uids:
-			result, data = mail.fetch(uid, "(BODY.PEEK[])") 	
+			result, data = mail.fetch(uid, "(BODY.PEEK[])")
 			message = data[0][1]
 			message = message[message.find("Content-Type: text/plain;"):]
 			message = message[message.find("\r"):]
 			message = message[:message.find("Content-Type")]
-			lines = message.split("\r")
+			lines = message.split("\n\r")
 			last = ""
 
 			for l in lines:
@@ -120,8 +136,10 @@ def main():
 						if addTorrent(l) == True: #if torrent has been added, then marks as read the email
 							mail.store(uid, '+FLAGS', '\Seen')	
 							print "torrent added: " + l
+							showMessage("torrent added", l)
 						else:
 							print "error injecting torrent: " + l
+							showMessage("error injecting torrent", l)
 
 						break
 
@@ -137,6 +155,7 @@ def main():
 		time.sleep(crontime)
 		main() 
 	else:
+		print retry_timeout
 		time.sleep(retry_timeout)
 		main()
 		
