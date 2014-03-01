@@ -21,3 +21,10 @@ REQUIREMENTS:
 
 - Transmission daemon and transmission web interface
 - IMAP account (gmail, ...)
+
+INSTALL:
+
+- Download this repo as zip
+- Go to your XBMC and install the addon from zip file
+- In your Addons > Services menu, go to the setup page of "GMail Torrent checker" and enter your gmail user and password. 
+- If your transmission is protected with user/password, you have to setup it too.
