@@ -131,7 +131,7 @@ def main():
 			for l in lines:
 				l = l.replace("\r","").replace("\n","")
 				ll = l.lower()
-				if (l.find("magnet:?")==0 or l.find("http://")==0): 
+				if (l.find("magnet:?")==0 or l.find("http://")==0 or l.find("https://")==0): 
 					if not any((s in last) for s in avoid_strs) and not any((s in ll) for s in avoid_strs):	
 						if addTorrent(l) == True: #if torrent has been added, then marks as read the email
 							mail.store(uid, '+FLAGS', '\Seen')	
