@@ -1,3 +1,4 @@
 *.pyc
 xbmcaddon.py
+xbmc.py
 *-v2.*
