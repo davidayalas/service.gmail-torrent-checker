@@ -1,12 +1,10 @@
 import xbmcaddon
 import xbmc
 import imaplib
-import email
 import httplib
 import base64
 import sys
 import time
-import re
 from json import dumps
 
 settings = xbmcaddon.Addon(id='service.gmail-torrent-checker')
@@ -39,8 +37,10 @@ try:
 except exceptions.ValueError:
 	port = 993
 
-if avoid_strs is not None:
+if avoid_strs is not None and avoid_strs is not "":
 	avoid_strs = avoid_strs.split(",")
+else:
+	avoid_strs = []
 
 transmission_auth=""
 if transmission_user is not "":
@@ -132,7 +132,7 @@ def main():
 				l = l.replace("\r","").replace("\n","")
 				ll = l.lower()
 				if (l.find("magnet:?")==0 or l.find("http://")==0 or l.find("https://")==0): 
-					if not any((s in last) for s in avoid_strs) and not any((s in ll) for s in avoid_strs):	
+					if len(avoid_strs) is 0 or (not any((s in last) for s in avoid_strs) and not any((s in ll) for s in avoid_strs)):	
 						if addTorrent(l) == True: #if torrent has been added, then marks as read the email
 							mail.store(uid, '+FLAGS', '\Seen')	
 							print "torrent added: " + l
@@ -144,7 +144,7 @@ def main():
 						break
 
 					else:
-						print "torrent discarded because of avoided strings: " + l
+						print "torrent discarded because of excluded strings: " + l
 
 				if len(l)>0:
 					last = l.lower()

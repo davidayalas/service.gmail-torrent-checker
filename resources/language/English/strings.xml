@@ -6,7 +6,7 @@
     <string id="32005">Username</string>
     <string id="32006">Password</string>
     <string id="32007">Run every (seconds)</string>
-    <string id="32009">Avoid strings in links or titles (separated by comma)</string>
+    <string id="32009">Exclude links if contain these strings (separated by comma)</string>
     <string id="32010">Search emails with subject</string>
 
     <string id="32001">IMAP</string>
