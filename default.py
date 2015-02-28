@@ -121,10 +121,21 @@ def main():
 
 		for uid in uids:
 			result, data = mail.fetch(uid, "(BODY.PEEK[])")
+			
 			message = data[0][1]
+			subject = message[:message.find("Content-Type: text/plain;")]
 			message = message[message.find("Content-Type: text/plain;"):]
 			message = message[message.find("\r"):]
 			message = message[:message.find("Content-Type")]
+			
+			subject = subject[subject.find("Subject:"):]
+			subject = subject[:subject.find("\r")]
+
+			insertAll = False
+
+			if subject.find("--all")>-1:
+				insertAll = True
+
 			lines = message.split("\n\r")
 			last = ""
 
@@ -141,7 +152,8 @@ def main():
 							print "error injecting torrent: " + l
 							showMessage("error injecting torrent", l)
 
-						break
+						if insertAll==False:		
+							break
 
 					else:
 						print "torrent discarded because of excluded strings: " + l

@@ -28,3 +28,7 @@ INSTALL:
 - Go to your XBMC and install the addon from zip file
 - In your Addons > Services menu, go to the setup page of "GMail Torrent checker" and enter your gmail user and password. 
 - If your transmission is protected with user/password, you have to setup it too.
+
+EXTRAS:
+
+- Multi torrent injection from one email: if you want to add more than one torrent in one email, you can add the parameter "--all" to the subject of the email
